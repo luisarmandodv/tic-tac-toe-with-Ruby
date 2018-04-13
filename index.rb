@@ -22,6 +22,8 @@ $game_table = {
   9 => " "
 }
 
+$changeRole = true
+
 def print_game_table
   puts " "
   puts " #{$game_table[1]} | #{$game_table[2]} | #{$game_table[3]} "
@@ -59,10 +61,17 @@ while true
   user_choice = gets.chomp.downcase
   $game_table.each do |choice, square|
     if user_choice.to_i == choice.to_i
-      #puts "Winner Winner Chicken Dinner"
       if square == " "
         puts "You have selected position #{user_choice}"
-        square.sub!(" ", "X")
+
+        if($changeRole == true)
+          square.sub!(" ", "X")
+          $changeRole = false
+        else
+          square.sub!(" ", "O")
+          $changeRole = true
+        end
+
         print_game_table
       else
         puts "Not this one, take another one"
@@ -71,11 +80,8 @@ while true
       puts "Oh no... What have you done!!! you selected #{user_choice}!!"
       exit
     elsif user_choice == "r"
-      puts "You have selected position #{user_choice}"
+      puts "Here is the table again: "
       print_example_table
-      break
-    else
-      puts "What are you doing? type a right number!"
       break
     end
   end
